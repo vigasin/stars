@@ -1,0 +1,6 @@
+pandas==1.5.2
+folium==0.14.0
+watchdog==2.2.1
+streamlit==1.16.0
+streamlit_folium==0.10.0
+streamlit_autorefresh==0.0.1
