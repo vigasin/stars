@@ -14,7 +14,7 @@ from folium.plugins import HeatMap
 from streamlit_autorefresh import st_autorefresh
 
 page_title = "Nx Real-Time / Live Activations Dashboard"
-st.set_page_config(layout="wide", page_title=page_title)
+st.set_page_config(layout="wide", page_title=page_title, initial_sidebar_state="collapsed")
 
 st_autorefresh(interval=30 * 1000, key="dataframerefresh")
 
