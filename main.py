@@ -21,6 +21,9 @@ st_autorefresh(interval=30 * 1000, key="dataframerefresh")
 from streamlit_folium import st_folium
 
 
+# BASE_URL = 'http://localhost:8000'
+BASE_URL = 'http://stars.hdw.mx:8000'
+
 def generateBaseMap(loc, zoom=4, tiles='OpenStreetMap', crs='ESPG2263'):
     return folium.Map(  # location=loc,
         control_scale=True,
@@ -30,7 +33,7 @@ def generateBaseMap(loc, zoom=4, tiles='OpenStreetMap', crs='ESPG2263'):
 
 @st.experimental_memo
 def get_data():
-    df = pd.read_csv('http://stars.hdw.mx:8000/activations_after/')
+    df = pd.read_csv(f'{BASE_URL}/activations_after/')
 
     df['channels'] = df['channels'] / df['channels'].sum()
     map_values1 = df[['latitude', 'longitude', 'channels']]
@@ -38,12 +41,12 @@ def get_data():
 
 
 def get_stats():
-    r = requests.get('http://stars.hdw.mx:8000/stats/')
+    r = requests.get(f'{BASE_URL}/stats/')
     return r.json()
 
 
 def get_latest():
-    df = pd.read_csv('http://stars.hdw.mx:8000/latest_activations/')
+    df = pd.read_csv(f'{BASE_URL}/latest_activations/')
     df['Date'] = df['Date'].apply(format_ts)
     return df
 
@@ -127,7 +130,7 @@ if __name__ == '__main__':
 
         stats = get_stats()
         total_channels = stats['total_channels']
-        latest_ts = format_ts(stats['latest_timestamp'])
-        st.text(f'Totally activated {total_channels} channels by {latest_ts}')
+        last_check = format_ts(stats['last_check'])
+        st.text(f'Totally activated {total_channels} channels by {last_check}')
 
 
